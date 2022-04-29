@@ -3,9 +3,7 @@ import React from "react";
 // import Navbar from "../Components/Navbar";
 const Home = () => {
   return (
-    <>
-      <h1>Home</h1>
-    </>
+    <div>Home</div>
   );
 };
 

@@ -32,6 +32,10 @@ const Register = () => {
         setEmailError("Password should be at least 6 characters ");
         setEmailErrorVisibility(true);
         break;
+      case "auth/invalid-email":
+        setEmailError("invalid email");
+        setEmailErrorVisibility(true);
+        break;
     }
   };
   const handleSubmit = async (e) => {
@@ -82,7 +86,6 @@ const Register = () => {
         Join the community to chat with your freinds
       </p>
       <form
-        component="form"
         className="mx-6 mt-4 text-center"
         onSubmit={handleSubmit}
       >

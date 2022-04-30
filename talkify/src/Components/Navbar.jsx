@@ -10,7 +10,7 @@ import { AuthContext } from "../context/Auth";
 import { useHistory } from "react-router-dom";
 const Navbar = () => {
   const history = useHistory();
-  const {user } = useContext(AuthContext);
+  const user = useContext(AuthContext);
   // console.log(user);
   const handleSignout = async () => {
     await updateDoc(doc(db, "users", auth.currentUser.uid), {

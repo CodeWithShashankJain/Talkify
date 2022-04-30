@@ -7,6 +7,7 @@ import Login from "./pages/Auth/Login";
 import Profile from "./pages/Profile";
 import Navbar from "./Components/Navbar";
 import AuthProvider from "./context/Auth";
+import PrivateRoute from "./Components/PrivateRoute";
 function App() {
   return (
     <>
@@ -14,10 +15,10 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/profile" component={Profile} />
+            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/profile" component={Profile} />
           </Switch>
         </BrowserRouter>
       </AuthProvider>

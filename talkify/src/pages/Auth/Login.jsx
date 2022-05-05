@@ -36,6 +36,7 @@ const Login = () => {
         break;
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setData({ ...data, error: null, loading: true });
@@ -54,7 +55,7 @@ const Login = () => {
         error: null,
         loading: false,
       });
-      history.replace("/");
+      history.replace("/home");
       console.log(result.user);
     } catch (err) {
       handleError(err.code);
@@ -63,6 +64,7 @@ const Login = () => {
     }
   };
   return (
+    <div className="flex h-screen items-center justify-center">
     <div
       className="w-3/6 mx-auto my-8 p-4 border
     -4 bg-white rounded-lg shadow-2xl "
@@ -94,7 +96,7 @@ const Login = () => {
             variant="outlined"
             type="password"
             size="small"
-            value={data.passwordl}
+            value={data.password}
             onChange={handleChange}
             required
           />
@@ -113,16 +115,17 @@ const Login = () => {
             )
           : null}
         <p className="mt-3 text-sm font-semibold text-center cursor-pointer">
-          Already have an account?{" "}
+          New User ?
           <Link to="/register">
-            <span className="hover:underline">Register</span>
+            <span className="hover:underline"> Register</span>
           </Link>
         </p>
-        <Button className="mt-3 block ml-auto w-28" disabled={loading}>
+        <Button className="mt-3 block ml-auto w-32" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
       </form>
-    </div>
+      </div>
+      </div>
   );
 };
 

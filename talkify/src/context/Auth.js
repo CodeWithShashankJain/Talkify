@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
   // else {
   //      return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
   // }
+
   return (
     <AuthContext.Provider value={user}>
       {children}

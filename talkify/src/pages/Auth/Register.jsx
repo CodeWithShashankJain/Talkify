@@ -65,7 +65,7 @@ const Register = () => {
         error: null,
         loading: false,
       });
-      history.replace("/");
+      history.replace("/home");
       console.log(result.user);
     } catch (err) {
       handleError(err.code);
@@ -75,6 +75,7 @@ const Register = () => {
   };
 
   return (
+    <div className="flex h-screen items-center justify-center">
     <div
       className="w-3/6 mx-auto my-8 p-4 border
     -4 bg-white rounded-lg shadow-2xl "
@@ -153,7 +154,8 @@ const Register = () => {
           {emailError}
         </Alert>
       )} */}
-    </div>
+      </div>
+      </div>
   );
 };
 

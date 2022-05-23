@@ -27,7 +27,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className="flex items-center justify-between p-5 border-4 h-16">
+      <nav className="flex items-center justify-between p-5 border-2 shadow-lg h-16">
         <Stack direction="row" spacing={2}>
           <Link to={user ? "/home" : "/"} className="text-5xl">
             <AiOutlineWechat />

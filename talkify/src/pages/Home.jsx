@@ -8,11 +8,16 @@ import {
   addDoc,
   Timestamp,
   orderBy,
+  setDoc,
+  doc,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import User from "../Components/User";
 import MessageForm from "../Components/MessageForm";
 import Message from "../Components/Message";
+
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [chat, setChat] = useState("");
@@ -20,7 +25,9 @@ const Home = () => {
   const [img, setImg] = useState("");
   // console.log(img, "initial");
   const [msgs, setMsgs] = useState([]);
+
   const user1 = auth.currentUser.uid;
+
   useEffect(() => {
     const userRef = collection(db, "users"); //Gets a CollectionReference instance that refers to the collection at the specified absolute path.
     // create query object
@@ -37,7 +44,7 @@ const Home = () => {
     return () => unsub();
   }, []);
 
-  const selectUser = (user) => {
+  const selectUser =  (user) => {
     setChat(user);
 
     const user2 = user.uid;
@@ -52,8 +59,17 @@ const Home = () => {
       });
       setMsgs(mssges);
     });
+
+    // get last message b/w logged in user and selected user
+    // const docSnap = await getDoc(doc(db, "lastMessage", id));
+    // // if last message exists and message is from selected user
+    // if (docSnap.data() && docSnap.data().from !== user1) {
+    //   // update last message doc, set unread to false
+    //   await updateDoc(doc(db, "lastMessage", id), { unread: false });
+    // }
   };
-  console.log(msgs);
+  // console.log(msgs,"messagessss"); { array of mesages}
+  // console.log(chat,"chatssss");{// chat is like user detail to whom are you chatting his email,uid etc.}
   // msgs.map((msg) => (console.log(msg.uid)));
 
   const handleSubmit = async (e) => {
@@ -82,16 +98,31 @@ const Home = () => {
       media: url || "",
     });
     // console.log(docRef)
+    await setDoc(doc(db, "lastMessage", id), {
+      text,
+      from: user1,
+      to: user2,
+      createdAt: Timestamp.fromDate(new Date()),
+      media: url || "",
+      unread: true,
+    });
     setText("");
     setImg("");
   };
+
   return (
     //home container
     <div className="border-2 w-screen h-[calc(100vh-4rem)]  grid grid-cols-6 space-x-2  relative">
       {/* user conatiner */}
       <div className="border-r-2 mt-2 col-span-2 overflow-y-auto">
         {users.map((user) => (
-          <User key={user.uid}  user={user} selectUser={selectUser} />
+          <User
+            key={user.uid}
+            user={user}
+            selectUser={selectUser}
+            user1={user1}
+            chat={chat}
+          />
         ))}
       </div>
       {/* message container */}
@@ -106,7 +137,9 @@ const Home = () => {
             {/* messgaes */}
             <div className="h-[calc(100vh-10rem)] overflow-y-auto border-b-2 p-2">
               {msgs.length
-                ? msgs.map((msg, i) => (<Message msg={msg} key={i} user1={user1} />))
+                ? msgs.map((msg, i) => (
+                    <Message msg={msg} key={i} user1={user1} />
+                  ))
                 : null}
             </div>
 
